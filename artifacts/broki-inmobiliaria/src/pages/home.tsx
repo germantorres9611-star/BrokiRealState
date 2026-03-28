@@ -34,7 +34,7 @@ export default function Home() {
             <a href="#galeria" className="hover:text-primary transition-colors">Galería</a>
             <a href="#precios" className="hover:text-primary transition-colors">Inversión</a>
           </div>
-          <Link href="/admin" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-white">
+          <Link href="/admin" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary">
             Admin
           </Link>
         </div>
@@ -46,9 +46,9 @@ export default function Home() {
           <img 
             src={`${import.meta.env.BASE_URL}images/hero-bg.png`}
             alt="Hero Background" 
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-center">
@@ -57,7 +57,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="text-6xl md:text-8xl lg:text-[140px] font-display font-bold leading-none mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50">
+            <h1 className="text-6xl md:text-8xl lg:text-[140px] font-display font-bold leading-none mb-6 text-foreground">
               {content.heroTitle}
             </h1>
             <p className="text-xl md:text-3xl text-muted-foreground font-light mb-12 max-w-3xl mx-auto">
@@ -106,14 +106,14 @@ export default function Home() {
                     alt={prop.name}
                     className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                   />
-                  <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 text-xs font-bold uppercase tracking-wider border border-border z-20">
+                  <div className="absolute top-4 left-4 bg-foreground/80 text-background backdrop-blur-md px-3 py-1 text-xs font-bold uppercase tracking-wider border border-border z-20">
                     {prop.category}
                   </div>
                 </div>
                 <div>
                   <h3 className="text-2xl font-display font-bold mb-2 group-hover:text-primary transition-colors">{prop.name}</h3>
                   <p className="text-muted-foreground text-sm uppercase tracking-widest mb-4">{prop.location}</p>
-                  <p className="text-xl font-bold text-white">{formatCurrency(prop.price)}</p>
+                  <p className="text-xl font-bold text-primary">{formatCurrency(prop.price)}</p>
                 </div>
               </motion.div>
             ))}
@@ -183,7 +183,7 @@ export default function Home() {
                   </div>
                 )}
                 <h3 className="text-2xl font-display font-bold mb-2">{tier.name}</h3>
-                <p className="text-3xl text-white font-bold mb-8">{tier.priceRange}</p>
+                <p className="text-3xl text-foreground font-bold mb-8">{tier.priceRange}</p>
                 <ul className="flex-1 space-y-4 mb-8">
                   {tier.features.map((f, j) => (
                     <li key={j} className="flex items-center gap-3 text-muted-foreground">
@@ -206,7 +206,7 @@ export default function Home() {
         <h2 className="text-5xl md:text-7xl font-display font-black mb-8 max-w-4xl mx-auto uppercase">
           Encuentra Tu Próximo Espacio
         </h2>
-        <Button onClick={handleContact} className="bg-black text-white hover:bg-white hover:text-black border-none text-xl py-4 px-10">
+        <Button onClick={handleContact} className="bg-white text-primary hover:bg-white/90 border-none text-xl py-4 px-10 font-bold">
           Agendar Visita Ahora
         </Button>
       </section>

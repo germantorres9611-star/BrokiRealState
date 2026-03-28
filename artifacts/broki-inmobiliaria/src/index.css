@@ -24,29 +24,29 @@
 }
 
 :root {
-  --background: 0 0% 3%;      /* #080808 near black */
-  --foreground: 0 0% 98%;     /* off-white */
+  --background: 0 0% 98%;      /* near white */
+  --foreground: 0 0% 5%;       /* near black */
   
-  --primary: 240 100% 52%;    /* #0A0AFF royal blue */
+  --primary: 142 72% 29%;      /* #16a34a deep green */
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 0 0% 10%;      /* dark grey */
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 0 0% 93%;       /* light grey */
+  --secondary-foreground: 0 0% 10%;
   
-  --muted: 0 0% 12%;
-  --muted-foreground: 0 0% 65%;
+  --muted: 0 0% 90%;
+  --muted-foreground: 0 0% 40%;
   
-  --accent: 240 100% 52%;
+  --accent: 142 72% 29%;
   --accent-foreground: 0 0% 100%;
   
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
   
-  --border: 0 0% 15%;
-  --ring: 240 100% 52%;
+  --border: 0 0% 82%;
+  --ring: 142 72% 29%;
   
-  --card: 0 0% 5%;
-  --card-foreground: 0 0% 98%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 5%;
 }
 
 @layer base {
@@ -71,7 +71,7 @@
     @apply bg-card border border-border transition-all duration-300;
   }
   .brutalist-card:hover {
-    @apply border-primary shadow-[0_0_20px_rgba(10,10,255,0.15)];
+    @apply border-primary shadow-[0_0_20px_rgba(22,163,74,0.15)];
   }
   
   /* Custom scrollbar for a premium feel */

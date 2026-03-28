@@ -70,7 +70,7 @@ export function PropertyModal({ property, onClose, onContact }: PropertyModalPro
                 {property.location}
               </div>
               
-              <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white">{formatCurrency(property.price)}</h1>
+              <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 text-primary">{formatCurrency(property.price)}</h1>
               
               <div className="grid grid-cols-3 gap-6 border-y border-border py-8 mb-8">
                 <div className="flex flex-col gap-2">
