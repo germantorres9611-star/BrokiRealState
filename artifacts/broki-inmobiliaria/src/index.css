@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Manrope', sans-serif;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+}
+
+:root {
+  --background: 0 0% 3%;      /* #080808 near black */
+  --foreground: 0 0% 98%;     /* off-white */
+  
+  --primary: 240 100% 52%;    /* #0A0AFF royal blue */
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 0% 10%;      /* dark grey */
+  --secondary-foreground: 0 0% 98%;
+  
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 65%;
+  
+  --accent: 240 100% 52%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 0 0% 15%;
+  --ring: 240 100% 52%;
+  
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 98%;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased font-sans overflow-x-hidden selection:bg-primary selection:text-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-tight uppercase;
+  }
+}
+
+@layer utilities {
+  .brutalist-border {
+    @apply border border-border;
+  }
+  .brutalist-border-b {
+    @apply border-b-2 border-border;
+  }
+  .brutalist-card {
+    @apply bg-card border border-border transition-all duration-300;
+  }
+  .brutalist-card:hover {
+    @apply border-primary shadow-[0_0_20px_rgba(10,10,255,0.15)];
+  }
+  
+  /* Custom scrollbar for a premium feel */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+}

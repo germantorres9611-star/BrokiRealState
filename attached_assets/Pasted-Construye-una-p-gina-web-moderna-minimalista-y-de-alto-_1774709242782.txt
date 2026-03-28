@@ -1,0 +1,141 @@
+Construye una página web moderna, minimalista y de alto nivel para una inmobiliaria llamada BROKI INMOBILIARIA, con estética brutalista y futurista + dashboard admin integrado.
+
+⚠️ IMPORTANTE
+
+El núcleo principal del sitio es el SISTEMA DE PROPIEDADES (APARTAMENTOS).
+Debe ser el foco central de toda la experiencia.
+
+🎨 ESTILO
+Inspirado en Nike, Adidas, A24
+Tema oscuro: negro + azul rey (#0A0AFF)
+Diseño brutalista: tipografía grande, layouts asimétricos, grids rotos
+Minimalista pero impactante
+Tono directo, moderno, sin clichés inmobiliarios tradicionales
+Uso fuerte de espacios negativos
+Sensación premium (más marca de lujo que inmobiliaria común)
+🧩 ESTRUCTURA PRINCIPAL
+1. HERO
+Pantalla completa
+Título: BROKI INMOBILIARIA
+Subtítulo: Espacios que definen tu estilo de vida.
+CTA principal: "Ver Apartamentos"
+CTA secundario: "Contáctanos"
+Animaciones sutiles (fade + aparición progresiva)
+2. SECCIÓN PRINCIPAL — SISTEMA DE APARTAMENTOS
+
+Crear una sección modular, expandible y visualmente impactante.
+
+Cada propiedad debe ser una tarjeta brutalista grande que se expande al hacer clic.
+
+TÍTULO:
+
+"APARTAMENTOS"
+
+CONTENIDO POR TARJETA:
+Nombre del proyecto
+Ubicación
+Precio
+Área (m²)
+Número de habitaciones
+Número de baños
+Descripción corta
+Galería de imágenes (slider interno)
+Botón: "Solicitar información"
+INTERACCIONES:
+Glow azul al hover
+Animación al expandir
+Transiciones suaves
+Efecto de zoom en imágenes
+3. GALERÍA
+Grid visual de propiedades
+Hover con zoom + overlay azul
+Estética editorial minimalista
+4. PRECIOS
+Tarjetas minimalistas
+Opcional: rangos o categorías:
+Económico
+Medio
+Premium
+Diseño limpio sin saturación
+5. SECCIÓN CTA
+Texto brutalista grande:
+"ENCUENTRA TU PRÓXIMO ESPACIO"
+Botón: "Agendar Visita"
+6. CONTACTO
+Teléfono: 3041363265
+Email: broki.inmobiliaria@gmail.com
+Botón flotante de WhatsApp (siempre visible)
+🌐 ELEMENTOS GLOBALES
+Scroll suave
+Animaciones con Framer Motion
+Hover effects sutiles
+Cursor interactivo opcional
+🎧 EXTRA (IMPORTANTE)
+REPRODUCTOR DE MÚSICA WEB
+Reproductor fijo (tipo barra inferior estilo SoundCloud)
+Reproduce archivos de audio subidos localmente
+Controles:
+Play / Pause
+Barra de progreso
+Nombre del archivo
+Debe cargar desde almacenamiento local
+🗂️ DASHBOARD ADMIN
+
+Ruta: /admin
+
+LOGIN:
+Usuario: broki
+Contraseña: 1111
+⚙️ FUNCIONALIDADES ADMIN
+1. GESTOR DE APARTAMENTOS (PRIORIDAD)
+Crear / editar / eliminar propiedades
+Campos:
+Nombre
+Ubicación
+Precio
+Área
+Habitaciones
+Baños
+Descripción
+Imágenes
+2. GESTOR DE ARCHIVOS (NUEVO 🔥)
+IMÁGENES:
+Subir imágenes desde el equipo
+Guardarlas en localStorage
+Listarlas y eliminarlas
+Usarlas en apartamentos
+AUDIO:
+Subir archivo de música
+Guardarlo en almacenamiento local
+Conectarlo automáticamente al reproductor web
+3. EDITOR DE CONTENIDO
+Hero (título + subtítulo)
+CTA
+Información de contacto
+4. EDITOR DE PRECIOS
+Modificar categorías o rangos
+5. GALERÍA
+Administrar imágenes mostradas
+6. ACTUALIZACIÓN EN TIEMPO REAL
+Cambios visibles inmediatamente
+7. ALMACENAMIENTO
+Usar localStorage para persistencia
+8. UI DEL ADMIN
+Diseño oscuro brutalista
+Sidebar con:
+Dashboard
+Apartamentos
+Archivos
+Galería
+Precios
+Contenido
+💻 TECNOLOGÍA
+React + Tailwind
+Framer Motion
+Componentes reutilizables
+Código modular limpio
+🎯 OBJETIVO FINAL
+
+Crear una web inmobiliaria premium donde el sistema de propiedades sea el producto principal.
+
+Debe sentirse como una marca de lujo moderna, no una inmobiliaria tradicional.

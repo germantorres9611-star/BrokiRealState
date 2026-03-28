@@ -1,15 +1,18 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: BROKI INMOBILIARIA API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: properties
+    description: Property management
+  - name: content
+    description: Site content management
 paths:
   /healthz:
     get:
@@ -24,6 +27,122 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /properties:
+    get:
+      operationId: listProperties
+      tags: [properties]
+      summary: List all properties
+      responses:
+        "200":
+          description: List of properties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Property"
+    post:
+      operationId: createProperty
+      tags: [properties]
+      summary: Create a property
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProperty"
+      responses:
+        "201":
+          description: Created property
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Property"
+  /properties/{id}:
+    get:
+      operationId: getProperty
+      tags: [properties]
+      summary: Get a property by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Property
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Property"
+        "404":
+          description: Not found
+    put:
+      operationId: updateProperty
+      tags: [properties]
+      summary: Update a property
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProperty"
+      responses:
+        "200":
+          description: Updated property
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Property"
+    delete:
+      operationId: deleteProperty
+      tags: [properties]
+      summary: Delete a property
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+  /content:
+    get:
+      operationId: getContent
+      tags: [content]
+      summary: Get site content
+      responses:
+        "200":
+          description: Site content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteContent"
+    put:
+      operationId: updateContent
+      tags: [content]
+      summary: Update site content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SiteContent"
+      responses:
+        "200":
+          description: Updated content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteContent"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +152,109 @@ components:
           type: string
       required:
         - status
-
+    Property:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        price:
+          type: number
+        area:
+          type: number
+        bedrooms:
+          type: integer
+        bathrooms:
+          type: integer
+        description:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+          enum: [economico, medio, premium]
+        available:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - location
+        - price
+        - area
+        - bedrooms
+        - bathrooms
+        - description
+        - images
+        - category
+        - available
+        - createdAt
+    CreateProperty:
+      type: object
+      properties:
+        name:
+          type: string
+        location:
+          type: string
+        price:
+          type: number
+        area:
+          type: number
+        bedrooms:
+          type: integer
+        bathrooms:
+          type: integer
+        description:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+          enum: [economico, medio, premium]
+        available:
+          type: boolean
+      required:
+        - name
+        - location
+        - price
+        - area
+        - bedrooms
+        - bathrooms
+        - description
+        - images
+        - category
+        - available
+    SiteContent:
+      type: object
+      properties:
+        heroTitle:
+          type: string
+        heroSubtitle:
+          type: string
+        heroCta:
+          type: string
+        heroCtaSecondary:
+          type: string
+        contactPhone:
+          type: string
+        contactEmail:
+          type: string
+        contactWhatsapp:
+          type: string
+      required:
+        - heroTitle
+        - heroSubtitle
+        - heroCta
+        - heroCtaSecondary
+        - contactPhone
+        - contactEmail
+        - contactWhatsapp
