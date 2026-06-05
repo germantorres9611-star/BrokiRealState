@@ -3,10 +3,11 @@ import { Link, useLocation } from 'wouter';
 import { LayoutDashboard, Home, FileImage, Settings, LogOut, Tags, Image as ImageIcon, SlidersHorizontal, Music } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { AudioPlayer } from '../../components/AudioPlayer';
+import { apiLogout } from '../../lib/storage-adapter';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useLocation();
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth]     = useState(false);
 
   useEffect(() => {
     const auth = localStorage.getItem('broki_auth');
@@ -14,8 +15,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     else setIsAuth(true);
   }, [setLocation]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('broki_auth');
+  const handleLogout = async () => {
+    await apiLogout(); // handles both localStorage cleanup and API session destroy
     setLocation('/admin/login');
   };
 

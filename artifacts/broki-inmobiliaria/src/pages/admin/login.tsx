@@ -6,28 +6,25 @@ import {
   hashPassword, initAdminCreds, getAdminCreds,
   isLockedOut, recordFailedAttempt, clearLoginAttempts, remainingAttempts
 } from '../../lib/security';
-import { addActivityLog } from '../../lib/local-db';
+import { logActivity } from '../../lib/storage-adapter';
+import { isApiMode, apiLogin } from '../../lib/storage-adapter';
 import { ShieldAlert } from 'lucide-react';
 
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError]       = useState('');
   const [lockInfo, setLockInfo] = useState({ locked: false, remainingMs: 0 });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading]   = useState(false);
 
   useEffect(() => {
-    // Init hashed credentials on first load
-    initAdminCreds();
-    // Check if already logged in
+    if (!isApiMode()) initAdminCreds();
     if (localStorage.getItem('broki_auth')) setLocation('/admin');
-    // Check lockout
     const lock = isLockedOut();
     setLockInfo(lock);
   }, [setLocation]);
 
-  // Countdown timer when locked
   useEffect(() => {
     if (!lockInfo.locked) return;
     const interval = setInterval(() => {
@@ -43,29 +40,42 @@ export default function AdminLogin() {
     setError('');
 
     const lock = isLockedOut();
-    if (lock.locked) {
-      setLockInfo(lock);
-      return;
-    }
-
-    if (!username.trim() || !password.trim()) {
-      setError('Completa todos los campos');
-      return;
-    }
+    if (lock.locked) { setLockInfo(lock); return; }
+    if (!username.trim() || !password.trim()) { setError('Completa todos los campos'); return; }
 
     setLoading(true);
     try {
-      await initAdminCreds();
-      const creds = getAdminCreds();
-      const inputHash = await hashPassword(password);
+      // ── API mode (Hostinger): send to PHP ──────────────
+      if (isApiMode()) {
+        const result = await apiLogin(username.trim(), password);
+        if (result.ok) {
+          clearLoginAttempts();
+          logActivity('Inicio de sesión', `Usuario: ${username.trim()}`);
+          setLocation('/admin');
+        } else {
+          const attempts = recordFailedAttempt();
+          const remaining = Math.max(0, 5 - attempts.count);
+          if (attempts.lockedUntil > 0) {
+            setLockInfo({ locked: true, remainingMs: attempts.lockedUntil - Date.now() });
+            setError('Demasiados intentos fallidos. Cuenta bloqueada por 5 minutos.');
+          } else {
+            setError(`Credenciales inválidas. ${remaining} intento${remaining !== 1 ? 's' : ''} restante${remaining !== 1 ? 's' : ''}.`);
+          }
+        }
+        return;
+      }
 
-      const validUsername = creds ? creds.username : 'broki';
+      // ── localStorage mode (Replit dev): SHA-256 local ──
+      await initAdminCreds();
+      const creds     = getAdminCreds();
+      const inputHash = await hashPassword(password);
+      const validUser = creds ? creds.username : 'broki';
       const validHash = creds?.passwordHash;
 
-      if (username === validUsername && inputHash === validHash) {
+      if (username === validUser && inputHash === validHash) {
         clearLoginAttempts();
         localStorage.setItem('broki_auth', 'true');
-        addActivityLog('Inicio de sesión', `Usuario: ${username}`);
+        logActivity('Inicio de sesión', `Usuario: ${username}`);
         setLocation('/admin');
       } else {
         const attempts = recordFailedAttempt();
@@ -120,35 +130,19 @@ export default function AdminLogin() {
                 {error}
               </div>
             )}
-
             <div>
               <Label>Usuario</Label>
-              <Input
-                type="text"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                placeholder="broki"
-                autoComplete="username"
-              />
+              <Input type="text" value={username} onChange={e => setUsername(e.target.value)}
+                placeholder="broki" autoComplete="username" />
             </div>
-
             <div>
               <Label>Contraseña</Label>
-              <Input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="••••"
-                autoComplete="current-password"
-              />
+              <Input type="password" value={password} onChange={e => setPassword(e.target.value)}
+                placeholder="••••" autoComplete="current-password" />
             </div>
-
             <div className="flex items-center justify-between">
-              <p className="text-xs text-muted-foreground">
-                Intentos restantes: {remainingAttempts()}
-              </p>
+              <p className="text-xs text-muted-foreground">Intentos restantes: {remainingAttempts()}</p>
             </div>
-
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Verificando...' : 'Ingresar al Sistema'}
             </Button>

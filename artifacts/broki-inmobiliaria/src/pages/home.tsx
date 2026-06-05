@@ -26,8 +26,8 @@ const fadeUp = {
 const stagger = { visible: { transition: { staggerChildren: 0.07 } } };
 
 // ── Animated hero title ──────────────────────────────
-function AnimatedTitle({ text }: { text: string }) {
-  const words = text.split(' ');
+function AnimatedTitle({ text }: { text: string | undefined }) {
+  const words = (text ?? '').split(' ');
   return (
     <div className="overflow-hidden flex flex-wrap justify-center gap-x-4 gap-y-1">
       {words.map((word, wi) => (

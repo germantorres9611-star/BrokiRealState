@@ -1,2 +1,3 @@
 - [Broki brand palette](broki-brand.md) — dark teal #0D3140 + olive green #8FA84D; site is full dark-mode to match brand
 - [Service data model](broki-services.md) — two independent sub-services in separate localStorage keys; legacy key ignored
+- [Broki Hostinger migration](broki-hostinger-migration.md) — PHP API + storage-adapter pattern; localStorage key mapping quirks; async query null guards needed

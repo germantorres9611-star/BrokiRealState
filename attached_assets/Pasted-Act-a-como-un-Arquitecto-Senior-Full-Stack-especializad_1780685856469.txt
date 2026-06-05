@@ -1,0 +1,178 @@
+Actúa como un Arquitecto Senior Full Stack especializado en migraciones desde Replit hacia Hostinger Business Hosting.
+
+OBJETIVO PRINCIPAL
+
+Quiero que este proyecto funcione completamente dentro de Hostinger Business Hosting sin depender de:
+
+Replit Deployments
+Render
+Railway
+VPS
+Servidores externos Node.js
+
+Analiza toda la arquitectura actual y realiza los cambios necesarios para que el sistema sea compatible con Hostinger Business Hosting manteniendo todas las funcionalidades existentes.
+
+Primero analiza completamente el proyecto actual e identifica:
+
+Qué partes utilizan Express.
+Qué partes utilizan la API.
+Qué partes utilizan Drizzle ORM.
+Qué funcionalidades dependen actualmente del backend Node.js.
+Qué cambios son necesarios para que todo funcione dentro de Hostinger Business Hosting.
+
+Genera un informe breve antes de comenzar los cambios.
+
+Refactoriza el proyecto para que pueda ejecutarse completamente dentro de Hostinger Business Hosting.
+
+Si es necesario:
+
+Reemplazar Express por PHP.
+Reemplazar servicios incompatibles.
+Adaptar almacenamiento.
+Adaptar autenticación.
+Adaptar subida de archivos.
+
+Mantener todas las funcionalidades existentes.
+
+El panel administrativo debe seguir funcionando después de la migración.
+
+Debe conservar:
+
+Inicio de sesión.
+Cambio de contraseña.
+Cambio de WhatsApp.
+Gestión de servicios.
+Gestión de fondos.
+Gestión de imágenes.
+Gestión de música.
+Configuración general.
+
+Todos los cambios deben persistir correctamente.
+
+Utilizar una solución compatible con Hostinger Business Hosting.
+
+Preferiblemente:
+
+MySQL de Hostinger.
+
+Crear automáticamente:
+
+Tablas necesarias.
+Migraciones necesarias.
+Configuración necesaria.
+
+Eliminar dependencias innecesarias de Node.js si ya no son requeridas.
+
+Las imágenes, música y archivos administrados desde el panel deben almacenarse dentro del hosting.
+
+Crear:
+
+Carpeta de uploads.
+Gestión de permisos.
+Validaciones.
+Reemplazo seguro de archivos.
+
+Formatos permitidos:
+
+Imágenes:
+
+JPG
+PNG
+WEBP
+
+Audio:
+
+MP3
+WAV
+OGG
+
+Configurar por defecto:
+
++57 3507081756
+
+Debe poder modificarse desde el panel administrativo.
+
+Mantener el módulo completo de Administración de Inmuebles.
+
+Debe incluir:
+
+Producción Audiovisual para Venta de Inmuebles.
+Corretaje y Administración de Arrendamientos.
+
+Ambos servicios deben poder editarse completamente desde el panel administrativo.
+
+Mantener el diseño actual pero mejorarlo.
+
+Agregar:
+
+Fondo animado tipo agua.
+Movimiento orgánico y elegante.
+Efecto visual fluido.
+Excelente rendimiento.
+
+La animación debe ser ligera y compatible con móviles.
+
+Cambiar la tipografía actual.
+
+Busco una apariencia:
+
+Moderna.
+Amigable.
+Elegante.
+Menos corporativa.
+Más cercana.
+
+Evitar tipografías excesivamente serias.
+
+Proponer una combinación moderna y visualmente atractiva.
+
+Mejorar el Hero principal.
+
+Agregar:
+
+Animación premium.
+Entrada cinematográfica.
+Efectos suaves.
+Más presencia visual.
+
+Inspiración:
+
+Pixar.
+Apple.
+Stripe.
+
+Mantener excelente rendimiento.
+
+Mantener compatibilidad completa con GitHub.
+
+Al finalizar:
+
+Actualizar todos los archivos necesarios.
+Eliminar dependencias obsoletas.
+Corregir rutas.
+Verificar compilación.
+Verificar despliegue.
+
+Antes de terminar:
+
+Verificar:
+
+✓ Login Admin
+✓ Cambio de contraseña
+✓ Cambio de WhatsApp
+✓ Cambio de música
+✓ Cambio de imágenes
+✓ Cambio de fondos
+✓ Administración de Inmuebles
+✓ Persistencia de datos
+✓ Compatibilidad Hostinger Business
+✓ Compatibilidad GitHub
+✓ Build de producción sin errores
+
+Finalmente generar un informe indicando:
+
+Qué archivos fueron modificados.
+Qué dependencias fueron eliminadas.
+Qué dependencias fueron agregadas.
+Qué debo subir a Hostinger.
+Pasos exactos para desplegar el proyecto en Hostinger Business Hosting.
