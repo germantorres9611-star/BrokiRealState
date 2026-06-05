@@ -2,7 +2,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getDB, setDB, addActivityLog,
   Property, SiteContent, UploadedFile, PricingCategory,
-  WhatsAppConfig, ActivityLog, AudioTrack, PropertyManagementService,
+  WhatsAppConfig, ActivityLog, AudioTrack,
+  AudiovisualSubService, BrokerageSubService,
   initDB
 } from "../lib/local-db";
 
@@ -94,7 +95,7 @@ export function useUpdateHeroBg() {
   return useMutation({
     mutationFn: async (data: string | null) => {
       if (data) { localStorage.setItem('broki_hero_bg', data); addActivityLog('Fondo del hero actualizado', 'Nueva imagen de fondo'); }
-      else { localStorage.removeItem('broki_hero_bg'); addActivityLog('Fondo del hero eliminado', 'Usando imagen por defecto'); }
+      else { localStorage.removeItem('broki_hero_bg'); addActivityLog('Fondo del hero eliminado', 'Usando animación de agua'); }
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['hero_bg'] })
   });
@@ -153,7 +154,6 @@ export function useUploadTrack() {
       };
       const updated = [newTrack, ...tracks];
       setDB('broki_tracks', updated);
-      // Auto-set as active if first track
       if (tracks.length === 0) localStorage.setItem('broki_active_track', newTrack.id);
       addActivityLog('Canción subida', name);
       return newTrack;
@@ -169,7 +169,6 @@ export function useDeleteTrack() {
       const track = tracks.find(t => t.id === id);
       const remaining = tracks.filter(t => t.id !== id);
       setDB('broki_tracks', remaining);
-      // If deleted was active, pick next
       const active = localStorage.getItem('broki_active_track');
       if (active === id) {
         if (remaining.length > 0) localStorage.setItem('broki_active_track', remaining[0].id);
@@ -193,7 +192,6 @@ export function useSetActiveTrack() {
   });
 }
 
-// Legacy single-audio (kept for backward compat)
 export function useAudio() {
   const track = useActiveTrack();
   return { data: track?.data ?? null };
@@ -236,24 +234,47 @@ export function useUpdatePricing() {
   });
 }
 
-// --- PROPERTY MANAGEMENT SERVICE ---
-export function usePropertyMgmtService() {
+// --- AUDIOVISUAL SUB-SERVICE ---
+export function useAudiovisualService() {
   return useQuery({
-    queryKey: ['property_mgmt'],
-    queryFn: () => getDB<PropertyManagementService>('broki_property_mgmt', {} as PropertyManagementService)
+    queryKey: ['audiovisual_svc'],
+    queryFn: () => getDB<AudiovisualSubService>('broki_audiovisual_svc', {} as AudiovisualSubService)
   });
 }
-export function useUpdatePropertyMgmtService() {
+export function useUpdateAudiovisualService() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (data: PropertyManagementService) => {
-      setDB('broki_property_mgmt', data);
-      addActivityLog('Servicio de administración actualizado', data.title);
+    mutationFn: async (data: AudiovisualSubService) => {
+      setDB('broki_audiovisual_svc', data);
+      addActivityLog('Servicio audiovisual actualizado', data.title);
       return data;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['property_mgmt'] })
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['audiovisual_svc'] })
   });
 }
+
+// --- BROKERAGE SUB-SERVICE ---
+export function useBrokerageService() {
+  return useQuery({
+    queryKey: ['brokerage_svc'],
+    queryFn: () => getDB<BrokerageSubService>('broki_brokerage_svc', {} as BrokerageSubService)
+  });
+}
+export function useUpdateBrokerageService() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: BrokerageSubService) => {
+      setDB('broki_brokerage_svc', data);
+      addActivityLog('Servicio de corretaje actualizado', data.title);
+      return data;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['brokerage_svc'] })
+  });
+}
+
+// Legacy compat
+export function usePropertyMgmtService() { return useAudiovisualService(); }
+export function useUpdatePropertyMgmtService() { return useUpdateAudiovisualService(); }
 
 // --- ACTIVITY LOG ---
 export function useActivityLog() {

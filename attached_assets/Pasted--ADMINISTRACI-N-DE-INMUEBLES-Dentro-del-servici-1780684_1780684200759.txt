@@ -1,0 +1,70 @@
+====================
+ADMINISTRACIÓN DE INMUEBLES
+===========================
+
+Dentro del servicio "Administración de Inmuebles", crear dos subservicios independientes y totalmente editables desde el panel administrativo.
+
+SUBSERVICIO 1:
+PRODUCCIÓN AUDIOVISUAL PARA VENTA DE INMUEBLES
+
+Texto inicial:
+
+Potenciamos la venta de inmuebles mediante contenido audiovisual profesional.
+
+Incluye:
+
+• 2 videos de alta calidad
+• Tomas aéreas con dron
+• 20 fotografías profesionales en alta calidad
+• Material para inventarios y promoción
+• Ficha técnica del inmueble
+
+Valor del servicio audiovisual:
+$600.000 COP
+
+Al concretarse la venta manejamos una comisión del 2.8% sobre el valor final de venta.
+
+Beneficio especial:
+
+El valor invertido en el trabajo audiovisual será devuelto al concretarse la venta con nosotros.
+
+No manejamos exclusividad.
+
+El propietario conserva todo el contenido realizado y puede utilizarlo libremente para cualquier necesidad.
+
+---
+
+SUBSERVICIO 2:
+CORRETAJE Y ADMINISTRACIÓN DE ARRENDAMIENTOS
+
+Texto inicial:
+
+💼 Resumen de costos – Servicio de corretaje inmobiliario
+
+Trabajamos bajo modalidad de corretaje con respaldo de aseguradoras reconocidas, garantizando un proceso seguro, transparente y confiable.
+
+📌 Costos
+
+El primer canon de arrendamiento cubre:
+
+• Comisión inmobiliaria
+• Estudio de perfiles
+• Póliza de arrendamiento
+• Gestión documental
+
+📌 A partir del segundo mes
+
+El propietario recibe el 100% del canon mensual sin descuentos adicionales.
+
+📌 Beneficios
+
+• Filtro de clientes calificados
+• Proceso ágil de colocación
+• Respaldo jurídico durante la vigencia del contrato
+• Respaldo financiero mediante póliza de arrendamiento
+• Seguimiento permanente al inmueble
+• Acompañamiento profesional durante todo el proceso
+
+Crear una presentación visual moderna para ambos servicios utilizando tarjetas premium, iconografía profesional, animaciones suaves y diseño coherente con el nuevo estilo Liquid Glass del sitio.
+
+Ambos servicios deben poder editarse completamente desde el panel administrativo sin necesidad de modificar código.

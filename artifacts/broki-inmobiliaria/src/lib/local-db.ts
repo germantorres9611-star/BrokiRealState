@@ -54,17 +54,31 @@ export type PricingCategory = {
   features: string[];
 };
 
-export type PropertyManagementService = {
+// ── Sub-services for "Administración de Inmuebles" ──
+
+export type AudiovisualSubService = {
+  visible: boolean;
   title: string;
   description: string;
   includes: string[];
-  audiovisualPrice: string;
+  price: string;
   commission: string;
   benefit: string;
   ownershipNote: string;
   noExclusivity: boolean;
-  visible: boolean;
 };
+
+export type BrokerageSubService = {
+  visible: boolean;
+  title: string;
+  description: string;
+  firstMonthCovers: string[];
+  fromSecondMonthNote: string;
+  benefits: string[];
+};
+
+// Legacy (kept for backward compat with any existing admin reads)
+export type PropertyManagementService = AudiovisualSubService;
 
 export type ActivityLog = {
   id: string;
@@ -97,7 +111,7 @@ const SEED_PROPERTIES: Property[] = [
 ];
 
 const SEED_CONTENT: SiteContent = {
-  heroTitle: "BROKI INMOBILIARIA",
+  heroTitle: "Broki Inmobiliaria",
   heroSubtitle: "Espacios que definen tu estilo de vida.",
   heroCta: "Ver Apartamentos",
   heroCtaSecondary: "Contáctanos",
@@ -113,13 +127,14 @@ const SEED_WHATSAPP: WhatsAppConfig = {
 };
 
 const SEED_PRICING: PricingCategory[] = [
-  { id: "economico", name: "ESTÁNDAR", priceRange: "Desde $350M COP", features: ["Diseño Funcional", "Ubicación Estratégica", "1-2 Habitaciones"] },
-  { id: "medio", name: "AVANZADO", priceRange: "Desde $600M COP", features: ["Acabados Premium", "Domótica Básica", "Vistas Panorámicas"] },
-  { id: "premium", name: "SIGNATURE", priceRange: "Desde $900M COP", features: ["Arquitectura de Autor", "Materiales Importados", "Servicios Exclusivos"] }
+  { id: "economico", name: "Estándar", priceRange: "Desde $350M COP", features: ["Diseño Funcional", "Ubicación Estratégica", "1-2 Habitaciones"] },
+  { id: "medio", name: "Avanzado", priceRange: "Desde $600M COP", features: ["Acabados Premium", "Domótica Básica", "Vistas Panorámicas"] },
+  { id: "premium", name: "Signature", priceRange: "Desde $900M COP", features: ["Arquitectura de Autor", "Materiales Importados", "Servicios Exclusivos"] }
 ];
 
-const SEED_PROPERTY_MGMT: PropertyManagementService = {
-  title: "Administración de Inmuebles",
+const SEED_AUDIOVISUAL: AudiovisualSubService = {
+  visible: true,
+  title: "Producción Audiovisual para Venta de Inmuebles",
   description: "Potenciamos la venta de inmuebles mediante contenido audiovisual profesional.",
   includes: [
     "2 videos de alta calidad",
@@ -128,12 +143,32 @@ const SEED_PROPERTY_MGMT: PropertyManagementService = {
     "Material para inventarios y promoción",
     "Ficha técnica del inmueble"
   ],
-  audiovisualPrice: "$600.000 COP",
+  price: "$600.000 COP",
   commission: "2.8% sobre el valor final de venta",
   benefit: "El valor invertido en el trabajo audiovisual será devuelto al concretarse la venta con nosotros.",
   ownershipNote: "El propietario conserva todo el contenido realizado y puede utilizarlo libremente para cualquier necesidad.",
-  noExclusivity: true,
-  visible: true
+  noExclusivity: true
+};
+
+const SEED_BROKERAGE: BrokerageSubService = {
+  visible: true,
+  title: "Corretaje y Administración de Arrendamientos",
+  description: "Trabajamos bajo modalidad de corretaje con respaldo de aseguradoras reconocidas, garantizando un proceso seguro, transparente y confiable.",
+  firstMonthCovers: [
+    "Comisión inmobiliaria",
+    "Estudio de perfiles",
+    "Póliza de arrendamiento",
+    "Gestión documental"
+  ],
+  fromSecondMonthNote: "El propietario recibe el 100% del canon mensual sin descuentos adicionales.",
+  benefits: [
+    "Filtro de clientes calificados",
+    "Proceso ágil de colocación",
+    "Respaldo jurídico durante la vigencia del contrato",
+    "Respaldo financiero mediante póliza de arrendamiento",
+    "Seguimiento permanente al inmueble",
+    "Acompañamiento profesional durante todo el proceso"
+  ]
 };
 
 // ── Init ────────────────────────────────────────────
@@ -156,8 +191,10 @@ export const initDB = () => {
     localStorage.setItem('broki_activity', JSON.stringify([]));
   if (!localStorage.getItem('broki_tracks'))
     localStorage.setItem('broki_tracks', JSON.stringify([]));
-  if (!localStorage.getItem('broki_property_mgmt'))
-    localStorage.setItem('broki_property_mgmt', JSON.stringify(SEED_PROPERTY_MGMT));
+  if (!localStorage.getItem('broki_audiovisual_svc'))
+    localStorage.setItem('broki_audiovisual_svc', JSON.stringify(SEED_AUDIOVISUAL));
+  if (!localStorage.getItem('broki_brokerage_svc'))
+    localStorage.setItem('broki_brokerage_svc', JSON.stringify(SEED_BROKERAGE));
 };
 
 export const getDB = <T>(key: string, fallback: T): T => {

@@ -1,131 +1,122 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
 @import "tailwindcss";
 
 @theme inline {
-  --font-display: 'Cormorant Garamond', serif;
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Nunito', sans-serif;
+  --font-sans:    'Nunito', sans-serif;
 
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-secondary: hsl(var(--secondary));
+  --color-background:           hsl(var(--background));
+  --color-foreground:           hsl(var(--foreground));
+  --color-primary:              hsl(var(--primary));
+  --color-primary-foreground:   hsl(var(--primary-foreground));
+  --color-secondary:            hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-  --color-destructive: hsl(var(--destructive));
+  --color-muted:                hsl(var(--muted));
+  --color-muted-foreground:     hsl(var(--muted-foreground));
+  --color-accent:               hsl(var(--accent));
+  --color-accent-foreground:    hsl(var(--accent-foreground));
+  --color-destructive:          hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
-  --color-border: hsl(var(--border));
-  --color-ring: hsl(var(--ring));
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
+  --color-border:               hsl(var(--border));
+  --color-ring:                 hsl(var(--ring));
+  --color-card:                 hsl(var(--card));
+  --color-card-foreground:      hsl(var(--card-foreground));
 }
 
 :root {
-  --background: 0 0% 98%;
-  --foreground: 0 0% 5%;
+  /* Deep teal brand palette from Broki logo */
+  --background:           200 66% 15%;   /* #0D3140 */
+  --foreground:           200  8% 94%;   /* near-white */
 
-  --primary: 142 72% 29%;
-  --primary-foreground: 0 0% 100%;
+  --primary:               77 37% 48%;   /* #8FA84D olive sage */
+  --primary-foreground:     0  0% 100%;
 
-  --secondary: 0 0% 93%;
-  --secondary-foreground: 0 0% 10%;
+  --secondary:            202 55% 20%;   /* lighter teal */
+  --secondary-foreground:   0  0% 94%;
 
-  --muted: 0 0% 90%;
-  --muted-foreground: 0 0% 40%;
+  --muted:                200 48% 22%;
+  --muted-foreground:     200 20% 62%;
 
-  --accent: 142 72% 29%;
-  --accent-foreground: 0 0% 100%;
+  --accent:                77 37% 48%;
+  --accent-foreground:      0  0% 100%;
 
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive:            0 72% 55%;
+  --destructive-foreground: 0  0% 98%;
 
-  --border: 0 0% 82%;
-  --ring: 142 72% 29%;
+  --border:               200 38% 26%;
+  --ring:                  77 37% 48%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 5%;
+  --card:                 200 55% 18%;
+  --card-foreground:        0  0% 94%;
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased font-sans overflow-x-hidden selection:bg-primary selection:text-white;
+    @apply bg-background text-foreground antialiased font-sans overflow-x-hidden;
     font-feature-settings: "kern" 1, "liga" 1;
+    selection-color: white;
+  }
+  body::selection, body *::selection {
+    background: hsl(77 37% 48% / 0.5);
+    color: white;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    @apply font-bold tracking-tight uppercase;
+    @apply font-bold tracking-tight;
   }
-
-  /* Cormorant looks stunning at large sizes with optical spacing */
   h1 { letter-spacing: -0.01em; }
-  h2 { letter-spacing: 0.02em; }
+  h2 { letter-spacing: -0.005em; }
 }
 
 @layer utilities {
   /* ──────────────────────────────────────────
-     LIQUID GLASS — Apple VisionOS inspired
+     LIQUID GLASS — Dark teal edition
      ────────────────────────────────────────── */
   .glass-nav {
-    background: rgba(250, 250, 250, 0.78);
-    backdrop-filter: blur(24px) saturate(200%) brightness(1.05);
-    -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.05);
+    background: rgba(10, 37, 53, 0.88);
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.08);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.08);
   }
   .glass-card {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.40);
-    box-shadow: 0 4px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+    background: rgba(22, 64, 85, 0.55);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
   }
   .glass-btn {
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-color: rgba(255,255,255,0.45) !important;
+    background: rgba(22, 64, 85, 0.45);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: hsl(var(--foreground));
   }
   .glass-btn:hover {
-    background: rgba(255,255,255,0.28);
+    background: rgba(35, 88, 112, 0.65);
+    border-color: rgba(143, 168, 77, 0.45);
   }
   .glass-tag {
-    background: rgba(0,0,0,0.52);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: #fff;
+    background: rgba(10, 37, 53, 0.80);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: hsl(var(--foreground));
   }
   .glass-overlay {
-    background: linear-gradient(to top, rgba(22,163,74,0.88), rgba(22,163,74,0.4));
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: linear-gradient(to top, rgba(10, 37, 53, 0.92) 0%, rgba(10, 37, 53, 0.6) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
-
-  /* ──────────────────
-     BRUTALIST HELPERS
-     ────────────────── */
-  .brutalist-card {
-    @apply bg-card border border-border transition-all duration-300;
+  /* Teal service card */
+  .service-card {
+    background: linear-gradient(135deg, rgba(22, 72, 94, 0.6) 0%, rgba(13, 49, 64, 0.8) 100%);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(143, 168, 77, 0.25);
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
-  .brutalist-card:hover {
-    @apply border-primary shadow-[0_0_20px_rgba(22,163,74,0.15)];
-  }
-
-  /* ──────────────────
-     SCROLLBAR
-     ────────────────── */
-  ::-webkit-scrollbar       { width: 5px; height: 5px; }
-  ::-webkit-scrollbar-track { background: hsl(var(--background)); }
-  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 0; }
-  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
-
-  /* ──────────────────
-     HERO TITLE CHARS
-     ────────────────── */
-  .hero-char {
-    display: inline-block;
-    will-change: transform, opacity;
+  .service-card:hover {
+    border-color: rgba(143, 168, 77, 0.55);
+    box-shadow: 0 0 40px rgba(143, 168, 77, 0.10);
   }
 }
