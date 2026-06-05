@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getDB, setDB, addActivityLog,
   Property, SiteContent, UploadedFile, PricingCategory,
-  WhatsAppConfig, ActivityLog,
+  WhatsAppConfig, ActivityLog, AudioTrack, PropertyManagementService,
   initDB
 } from "../lib/local-db";
 
@@ -12,7 +12,6 @@ initDB();
 export function useProperties() {
   return useQuery({ queryKey: ['properties'], queryFn: () => getDB<Property[]>('broki_properties', []) });
 }
-
 export function useCreateProperty() {
   const qc = useQueryClient();
   return useMutation({
@@ -26,7 +25,6 @@ export function useCreateProperty() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['properties'] })
   });
 }
-
 export function useUpdateProperty() {
   const qc = useQueryClient();
   return useMutation({
@@ -39,7 +37,6 @@ export function useUpdateProperty() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['properties'] })
   });
 }
-
 export function useDeleteProperty() {
   const qc = useQueryClient();
   return useMutation({
@@ -57,7 +54,6 @@ export function useDeleteProperty() {
 export function useSiteContent() {
   return useQuery({ queryKey: ['content'], queryFn: () => getDB<SiteContent>('broki_content', {} as SiteContent) });
 }
-
 export function useUpdateContent() {
   const qc = useQueryClient();
   return useMutation({
@@ -74,10 +70,9 @@ export function useUpdateContent() {
 export function useWhatsAppConfig() {
   return useQuery({
     queryKey: ['whatsapp'],
-    queryFn: () => getDB<WhatsAppConfig>('broki_whatsapp', { number: '573041363265', message: '', buttonText: 'Escríbenos' })
+    queryFn: () => getDB<WhatsAppConfig>('broki_whatsapp', { number: '573507081756', message: '', buttonText: 'Escríbenos' })
   });
 }
-
 export function useUpdateWhatsAppConfig() {
   const qc = useQueryClient();
   return useMutation({
@@ -92,23 +87,14 @@ export function useUpdateWhatsAppConfig() {
 
 // --- HERO BACKGROUND ---
 export function useHeroBg() {
-  return useQuery({
-    queryKey: ['hero_bg'],
-    queryFn: () => localStorage.getItem('broki_hero_bg') || null
-  });
+  return useQuery({ queryKey: ['hero_bg'], queryFn: () => localStorage.getItem('broki_hero_bg') || null });
 }
-
 export function useUpdateHeroBg() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (data: string | null) => {
-      if (data) {
-        localStorage.setItem('broki_hero_bg', data);
-        addActivityLog('Fondo del hero actualizado', 'Nueva imagen de fondo');
-      } else {
-        localStorage.removeItem('broki_hero_bg');
-        addActivityLog('Fondo del hero eliminado', 'Usando imagen por defecto');
-      }
+      if (data) { localStorage.setItem('broki_hero_bg', data); addActivityLog('Fondo del hero actualizado', 'Nueva imagen de fondo'); }
+      else { localStorage.removeItem('broki_hero_bg'); addActivityLog('Fondo del hero eliminado', 'Usando imagen por defecto'); }
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['hero_bg'] })
   });
@@ -118,7 +104,6 @@ export function useUpdateHeroBg() {
 export function useImages() {
   return useQuery({ queryKey: ['images'], queryFn: () => getDB<UploadedFile[]>('broki_images', []) });
 }
-
 export function useUploadImage() {
   const qc = useQueryClient();
   return useMutation({
@@ -132,7 +117,6 @@ export function useUploadImage() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['images'] })
   });
 }
-
 export function useDeleteImage() {
   const qc = useQueryClient();
   return useMutation({
@@ -146,11 +130,74 @@ export function useDeleteImage() {
   });
 }
 
-// --- AUDIO ---
-export function useAudio() {
-  return useQuery({ queryKey: ['audio'], queryFn: () => typeof window !== 'undefined' ? localStorage.getItem('broki_audio') : null });
+// --- AUDIO TRACKS (multi-track system) ---
+export function useTracks() {
+  return useQuery({ queryKey: ['tracks'], queryFn: () => getDB<AudioTrack[]>('broki_tracks', []) });
+}
+export function useActiveTrackId() {
+  return useQuery({ queryKey: ['active_track'], queryFn: () => localStorage.getItem('broki_active_track') || null });
+}
+export function useActiveTrack() {
+  const { data: tracks = [] } = useTracks();
+  const { data: activeId } = useActiveTrackId();
+  return tracks.find(t => t.id === activeId) ?? tracks[0] ?? null;
+}
+export function useUploadTrack() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ name, format, data }: { name: string; format: string; data: string }) => {
+      const tracks = getDB<AudioTrack[]>('broki_tracks', []);
+      const newTrack: AudioTrack = {
+        id: Math.random().toString(36).substring(2, 9), name, format, data,
+        createdAt: new Date().toISOString()
+      };
+      const updated = [newTrack, ...tracks];
+      setDB('broki_tracks', updated);
+      // Auto-set as active if first track
+      if (tracks.length === 0) localStorage.setItem('broki_active_track', newTrack.id);
+      addActivityLog('Canción subida', name);
+      return newTrack;
+    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['tracks'] }); qc.invalidateQueries({ queryKey: ['active_track'] }); }
+  });
+}
+export function useDeleteTrack() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const tracks = getDB<AudioTrack[]>('broki_tracks', []);
+      const track = tracks.find(t => t.id === id);
+      const remaining = tracks.filter(t => t.id !== id);
+      setDB('broki_tracks', remaining);
+      // If deleted was active, pick next
+      const active = localStorage.getItem('broki_active_track');
+      if (active === id) {
+        if (remaining.length > 0) localStorage.setItem('broki_active_track', remaining[0].id);
+        else localStorage.removeItem('broki_active_track');
+      }
+      if (track) addActivityLog('Canción eliminada', track.name);
+    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['tracks'] }); qc.invalidateQueries({ queryKey: ['active_track'] }); }
+  });
+}
+export function useSetActiveTrack() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const tracks = getDB<AudioTrack[]>('broki_tracks', []);
+      const track = tracks.find(t => t.id === id);
+      localStorage.setItem('broki_active_track', id);
+      if (track) addActivityLog('Canción activa cambiada', track.name);
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['active_track'] })
+  });
 }
 
+// Legacy single-audio (kept for backward compat)
+export function useAudio() {
+  const track = useActiveTrack();
+  return { data: track?.data ?? null };
+}
 export function useUploadAudio() {
   const qc = useQueryClient();
   return useMutation({
@@ -166,7 +213,6 @@ export function useUploadAudio() {
 export function useGallery() {
   return useQuery({ queryKey: ['gallery'], queryFn: () => getDB<string[]>('broki_gallery', []) });
 }
-
 export function useUpdateGallery() {
   const qc = useQueryClient();
   return useMutation({
@@ -179,7 +225,6 @@ export function useUpdateGallery() {
 export function usePricing() {
   return useQuery({ queryKey: ['pricing'], queryFn: () => getDB<PricingCategory[]>('broki_prices', []) });
 }
-
 export function useUpdatePricing() {
   const qc = useQueryClient();
   return useMutation({
@@ -188,6 +233,25 @@ export function useUpdatePricing() {
       addActivityLog('Precios actualizados', '');
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['pricing'] })
+  });
+}
+
+// --- PROPERTY MANAGEMENT SERVICE ---
+export function usePropertyMgmtService() {
+  return useQuery({
+    queryKey: ['property_mgmt'],
+    queryFn: () => getDB<PropertyManagementService>('broki_property_mgmt', {} as PropertyManagementService)
+  });
+}
+export function useUpdatePropertyMgmtService() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: PropertyManagementService) => {
+      setDB('broki_property_mgmt', data);
+      addActivityLog('Servicio de administración actualizado', data.title);
+      return data;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['property_mgmt'] })
   });
 }
 

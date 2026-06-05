@@ -12,6 +12,7 @@ import AdminContent from "./pages/admin/content";
 import AdminGallery from "./pages/admin/gallery";
 import AdminPricing from "./pages/admin/pricing";
 import AdminConfig from "./pages/admin/config";
+import AdminMusic from "./pages/admin/music";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ function Router() {
       <Route path="/admin/gallery" component={AdminGallery} />
       <Route path="/admin/pricing" component={AdminPricing} />
       <Route path="/admin/config" component={AdminConfig} />
+      <Route path="/admin/music" component={AdminMusic} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { LayoutDashboard, Home, FileImage, Settings, LogOut, Tags, Image as ImageIcon, SlidersHorizontal } from 'lucide-react';
+import { LayoutDashboard, Home, FileImage, Settings, LogOut, Tags, Image as ImageIcon, SlidersHorizontal, Music } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { AudioPlayer } from '../../components/AudioPlayer';
 
@@ -10,11 +10,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const auth = localStorage.getItem('broki_auth');
-    if (!auth) {
-      setLocation('/admin/login');
-    } else {
-      setIsAuth(true);
-    }
+    if (!auth) setLocation('/admin/login');
+    else setIsAuth(true);
   }, [setLocation]);
 
   const handleLogout = () => {
@@ -25,24 +22,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (!isAuth) return <div className="min-h-screen bg-background" />;
 
   const menu = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/admin' },
-    { label: 'Apartamentos', icon: Home, path: '/admin/properties' },
-    { label: 'Archivos', icon: FileImage, path: '/admin/files' },
-    { label: 'Galería', icon: ImageIcon, path: '/admin/gallery' },
-    { label: 'Precios', icon: Tags, path: '/admin/pricing' },
-    { label: 'Contenido', icon: Settings, path: '/admin/content' },
+    { label: 'Dashboard',     icon: LayoutDashboard,  path: '/admin' },
+    { label: 'Apartamentos',  icon: Home,              path: '/admin/properties' },
+    { label: 'Archivos',      icon: FileImage,         path: '/admin/files' },
+    { label: 'Galería',       icon: ImageIcon,         path: '/admin/gallery' },
+    { label: 'Precios',       icon: Tags,              path: '/admin/pricing' },
+    { label: 'Contenido',     icon: Settings,          path: '/admin/content' },
+    { label: 'Música',        icon: Music,             path: '/admin/music' },
     { label: 'Configuración', icon: SlidersHorizontal, path: '/admin/config' },
   ];
 
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row pb-16 md:pb-0">
-      {/* Sidebar */}
       <aside className="w-full md:w-64 bg-card border-r border-border flex flex-col shrink-0">
         <div className="h-20 flex items-center px-6 border-b border-border">
           <span className="font-display font-bold text-xl tracking-widest text-primary">BROKI ADMIN</span>
         </div>
         <nav className="flex-1 py-4 flex flex-row md:flex-col overflow-x-auto md:overflow-visible gap-1 px-3">
-          {menu.map((item) => {
+          {menu.map(item => {
             const isActive = location === item.path;
             return (
               <Link key={item.path} href={item.path}>
@@ -70,11 +67,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
-        <div className="p-6 md:p-10 max-w-6xl mx-auto">
-          {children}
-        </div>
+        <div className="p-6 md:p-10 max-w-6xl mx-auto">{children}</div>
       </main>
 
       <AudioPlayer />

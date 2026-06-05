@@ -3,13 +3,14 @@ import AdminLayout from './layout';
 import {
   useWhatsAppConfig, useUpdateWhatsAppConfig,
   useHeroBg, useUpdateHeroBg,
-  useActivityLog
+  useActivityLog,
+  usePropertyMgmtService, useUpdatePropertyMgmtService
 } from '../../hooks/use-broki';
 import { Button, Input, Label, Textarea } from '../../components/ui-custom';
 import { fileToBase64 } from '../../lib/utils';
 import { hashPassword, getAdminCreds, saveAdminCreds, passwordStrength, sanitize } from '../../lib/security';
-import { addActivityLog } from '../../lib/local-db';
-import { MessageCircle, ImageIcon, Shield, Activity, CheckCircle, XCircle, Trash2, Upload } from 'lucide-react';
+import { addActivityLog, PropertyManagementService } from '../../lib/local-db';
+import { MessageCircle, ImageIcon, Shield, Activity, CheckCircle, XCircle, Trash2, Upload, Building2, Plus, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 // --- WhatsApp Section ---
@@ -262,12 +263,91 @@ function ActivitySection() {
   );
 }
 
+// --- Property Management Service Section ---
+function PropertyMgmtSection() {
+  const { data: svc } = usePropertyMgmtService();
+  const updateMut = useUpdatePropertyMgmtService();
+  const [form, setForm] = useState<PropertyManagementService | null>(null);
+  const [saved, setSaved] = useState(false);
+  const [newFeature, setNewFeature] = useState('');
+
+  useEffect(() => { if (svc && !form) setForm(svc); }, [svc]);
+
+  if (!form) return null;
+
+  const handleSave = async () => {
+    await updateMut.mutateAsync(form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const addFeature = () => {
+    if (!newFeature.trim()) return;
+    setForm(f => f ? { ...f, includes: [...f.includes, newFeature.trim()] } : f);
+    setNewFeature('');
+  };
+  const removeFeature = (i: number) => setForm(f => f ? { ...f, includes: f.includes.filter((_, idx) => idx !== i) } : f);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 mb-2">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" checked={form.visible} onChange={e => setForm(f => f ? { ...f, visible: e.target.checked } : f)}
+            className="w-5 h-5 accent-primary" />
+          <span className="font-bold text-sm uppercase tracking-wider">Visible en el sitio</span>
+        </label>
+      </div>
+
+      <div><Label>Título</Label><Input value={form.title} onChange={e => setForm(f => f ? { ...f, title: e.target.value } : f)} /></div>
+      <div><Label>Descripción</Label>
+        <Textarea value={form.description} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setForm(f => f ? { ...f, description: e.target.value } : f)} rows={3} />
+      </div>
+
+      <div>
+        <Label className="mb-3 block">Qué incluye</Label>
+        <div className="space-y-2 mb-3">
+          {form.includes.map((item, i) => (
+            <div key={i} className="flex items-center gap-2 p-3 bg-secondary border border-border">
+              <span className="flex-1 text-sm">{item}</span>
+              <button onClick={() => removeFeature(i)} className="text-muted-foreground hover:text-destructive transition-colors">
+                <X size={14} />
+              </button>
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-2">
+          <Input value={newFeature} onChange={e => setNewFeature(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addFeature())}
+            placeholder="Agregar ítem..." className="flex-1" />
+          <Button type="button" variant="outline" onClick={addFeature} className="px-3"><Plus size={16} /></Button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><Label>Precio del servicio audiovisual</Label><Input value={form.audiovisualPrice} onChange={e => setForm(f => f ? { ...f, audiovisualPrice: e.target.value } : f)} /></div>
+        <div><Label>Comisión por venta</Label><Input value={form.commission} onChange={e => setForm(f => f ? { ...f, commission: e.target.value } : f)} /></div>
+      </div>
+      <div><Label>Beneficio especial</Label>
+        <Textarea value={form.benefit} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setForm(f => f ? { ...f, benefit: e.target.value } : f)} rows={2} />
+      </div>
+      <div><Label>Nota sobre propiedad del contenido</Label>
+        <Textarea value={form.ownershipNote} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setForm(f => f ? { ...f, ownershipNote: e.target.value } : f)} rows={2} />
+      </div>
+      <div className="flex items-center gap-3 pt-2">
+        <Button onClick={handleSave} disabled={updateMut.isPending}>{updateMut.isPending ? 'Guardando...' : 'Guardar Servicio'}</Button>
+        {saved && <span className="text-primary text-sm flex items-center gap-1"><CheckCircle size={14} /> Guardado</span>}
+      </div>
+    </div>
+  );
+}
+
 // --- Main Config Page ---
 const sections = [
-  { id: 'whatsapp', label: 'WhatsApp', icon: MessageCircle },
-  { id: 'hero', label: 'Fondo Hero', icon: ImageIcon },
-  { id: 'security', label: 'Seguridad', icon: Shield },
-  { id: 'activity', label: 'Actividad', icon: Activity },
+  { id: 'whatsapp', label: 'WhatsApp',  icon: MessageCircle },
+  { id: 'hero',     label: 'Fondo Hero', icon: ImageIcon },
+  { id: 'service',  label: 'Servicio',   icon: Building2 },
+  { id: 'security', label: 'Seguridad',  icon: Shield },
+  { id: 'activity', label: 'Actividad',  icon: Activity },
 ];
 
 export default function AdminConfig() {
@@ -320,6 +400,12 @@ export default function AdminConfig() {
             <section>
               <h2 className="text-xl font-bold mb-6 flex items-center gap-2"><Shield size={20} /> Seguridad Administrativa</h2>
               <PasswordSection />
+            </section>
+          )}
+          {active === 'service' && (
+            <section>
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2"><Building2 size={20} /> Administración de Inmuebles</h2>
+              <PropertyMgmtSection />
             </section>
           )}
           {active === 'activity' && (

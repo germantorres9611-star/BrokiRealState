@@ -1,0 +1,154 @@
+Analiza el proyecto actual y realiza únicamente los cambios descritos a continuación, respetando toda la funcionalidad existente.
+
+IMPORTANTE:
+
+Este proyecto será migrado próximamente desde Replit hacia GitHub y posteriormente a Hostinger.
+
+Todas las nuevas funcionalidades deben ser compatibles con dicha migración y funcionar correctamente después del despliegue.
+
+No modificar funcionalidades existentes que ya estén funcionando.
+
+====================
+WHATSAPP
+========
+
+Actualizar el número principal de WhatsApp a:
+
++57 3507081756
+
+Crear dentro del panel administrativo una sección donde pueda modificar:
+
+* Número de WhatsApp.
+* Mensaje predeterminado.
+* Texto del botón.
+
+Los cambios deben reflejarse automáticamente en toda la web.
+
+====================
+TIPOGRAFÍA
+==========
+
+Modernizar completamente la tipografía.
+
+Quiero una apariencia:
+
+* Profesional.
+* Elegante.
+* Contemporánea.
+* Premium.
+
+Propón una combinación tipográfica moderna que transmita confianza y alto valor percibido.
+
+====================
+TÍTULO PRINCIPAL
+================
+
+El título principal del Home debe verse mucho más impactante.
+
+Agregar una animación elegante inspirada en:
+
+* Pixar.
+* Apple.
+* Tesla.
+
+Debe transmitir fuerza, innovación y profesionalismo.
+
+No utilizar efectos exagerados.
+
+Debe verse premium y moderno.
+
+====================
+DISEÑO GENERAL
+==============
+
+Mejorar visualmente toda la página.
+
+Agregar:
+
+* Efectos Liquid Glass.
+* Blur elegante.
+* Capas translúcidas.
+* Microanimaciones.
+* Hover effects premium.
+* Animaciones suaves al hacer scroll.
+* Transiciones modernas.
+
+Mantener un excelente rendimiento en móviles y escritorio.
+
+====================
+REPRODUCTOR MUSICAL
+===================
+
+Crear dentro del panel administrativo una nueva sección:
+
+"Música"
+
+Permitir:
+
+* Subir canciones.
+* Reemplazar canciones.
+* Eliminar canciones.
+* Seleccionar canción activa.
+
+Los archivos deben almacenarse localmente dentro del proyecto.
+
+Formatos permitidos:
+
+* MP3
+* WAV
+* OGG
+
+El reproductor de la página debe leer automáticamente la canción configurada desde el panel administrativo.
+
+====================
+ADMINISTRACIÓN DE INMUEBLES
+===========================
+
+Agregar un nuevo servicio llamado:
+
+"Administración de Inmuebles"
+
+Debe mostrarse dentro de la sección de servicios.
+
+Crear dentro del panel administrativo una sección editable para modificar el contenido de este servicio.
+
+Configurar inicialmente el siguiente texto:
+
+Potenciamos la venta de inmuebles mediante contenido audiovisual profesional.
+
+Incluye:
+
+• 2 videos de alta calidad
+• Tomas aéreas con dron
+• 20 fotografías profesionales en alta calidad
+• Material para inventarios y promoción
+• Ficha técnica del inmueble
+
+Valor del servicio audiovisual:
+$600.000 COP
+
+Al concretarse la venta manejamos una comisión del 2.8% sobre el valor final de venta.
+
+Beneficio especial:
+
+El valor invertido en el trabajo audiovisual será devuelto al concretarse la venta con nosotros.
+
+No manejamos exclusividad.
+
+El propietario conserva todo el contenido realizado y puede utilizarlo libremente para cualquier necesidad.
+
+====================
+VALIDACIÓN FINAL
+================
+
+Antes de finalizar:
+
+* Verificar que el panel administrativo funcione correctamente.
+* Verificar que los cambios persistan después de reiniciar la aplicación.
+* Verificar compatibilidad con GitHub.
+* Verificar compatibilidad con Hostinger.
+* Verificar funcionamiento del reproductor musical.
+* Verificar funcionamiento del módulo de Administración de Inmuebles.
+* Verificar funcionamiento del cambio de WhatsApp desde el panel administrativo.
+
+Generar un resumen final indicando exactamente qué archivos fueron modificados y qué nuevas funcionalidades fueron agregadas.
