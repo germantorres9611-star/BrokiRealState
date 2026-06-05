@@ -24,27 +24,27 @@
 }
 
 :root {
-  --background: 0 0% 98%;      /* near white */
-  --foreground: 0 0% 5%;       /* near black */
-  
-  --primary: 142 72% 29%;      /* #16a34a deep green */
+  --background: 0 0% 98%;
+  --foreground: 0 0% 5%;
+
+  --primary: 142 72% 29%;
   --primary-foreground: 0 0% 100%;
-  
-  --secondary: 0 0% 93%;       /* light grey */
+
+  --secondary: 0 0% 93%;
   --secondary-foreground: 0 0% 10%;
-  
+
   --muted: 0 0% 90%;
   --muted-foreground: 0 0% 40%;
-  
+
   --accent: 142 72% 29%;
   --accent-foreground: 0 0% 100%;
-  
+
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
-  
+
   --border: 0 0% 82%;
   --ring: 142 72% 29%;
-  
+
   --card: 0 0% 100%;
   --card-foreground: 0 0% 5%;
 }
@@ -61,32 +61,70 @@
 }
 
 @layer utilities {
-  .brutalist-border {
-    @apply border border-border;
+  /* ──────────────────────────────────────────
+     LIQUID GLASS — inspired by Apple VisionOS
+     ────────────────────────────────────────── */
+
+  /* Frosted nav bar */
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
   }
-  .brutalist-border-b {
-    @apply border-b-2 border-border;
+
+  /* Card glass */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.60);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255,255,255,0.5);
   }
+
+  /* Outline button glass variant */
+  .glass-btn {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: rgba(255, 255, 255, 0.4) !important;
+  }
+  .glass-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Property card category tag */
+  .glass-tag {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+
+  /* Property card hover overlay */
+  .glass-overlay {
+    background: linear-gradient(to top, rgba(22, 163, 74, 0.85), rgba(22, 163, 74, 0.4));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* ──────────────────
+     BRUTALIST HELPERS
+     ────────────────── */
+  .brutalist-border   { @apply border border-border; }
+  .brutalist-border-b { @apply border-b-2 border-border; }
   .brutalist-card {
     @apply bg-card border border-border transition-all duration-300;
   }
   .brutalist-card:hover {
     @apply border-primary shadow-[0_0_20px_rgba(22,163,74,0.15)];
   }
-  
-  /* Custom scrollbar for a premium feel */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
-  }
-  ::-webkit-scrollbar-thumb {
-    background: hsl(var(--border));
-    border-radius: 0px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary));
-  }
+
+  /* ──────────────────
+     SCROLLBAR
+     ────────────────── */
+  ::-webkit-scrollbar       { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--background)); }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
 }

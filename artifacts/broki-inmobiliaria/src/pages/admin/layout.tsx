@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { LayoutDashboard, Home, FileImage, Settings, LogOut, Tags, Image as ImageIcon } from 'lucide-react';
+import { LayoutDashboard, Home, FileImage, Settings, LogOut, Tags, Image as ImageIcon, SlidersHorizontal } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { AudioPlayer } from '../../components/AudioPlayer';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { label: 'Galería', icon: ImageIcon, path: '/admin/gallery' },
     { label: 'Precios', icon: Tags, path: '/admin/pricing' },
     { label: 'Contenido', icon: Settings, path: '/admin/content' },
+    { label: 'Configuración', icon: SlidersHorizontal, path: '/admin/config' },
   ];
 
   return (
@@ -40,26 +41,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="h-20 flex items-center px-6 border-b border-border">
           <span className="font-display font-bold text-xl tracking-widest text-primary">BROKI ADMIN</span>
         </div>
-        <nav className="flex-1 py-6 flex flex-row md:flex-col overflow-x-auto md:overflow-visible gap-2 px-4">
+        <nav className="flex-1 py-4 flex flex-row md:flex-col overflow-x-auto md:overflow-visible gap-1 px-3">
           {menu.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive = location === item.path;
             return (
               <Link key={item.path} href={item.path}>
                 <div className={cn(
                   "flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors border shrink-0 md:shrink",
-                  isActive 
-                    ? "bg-primary/10 text-primary border-primary" 
-                    : "border-transparent text-muted-foreground hover:bg-secondary hover:text-white"
+                  isActive
+                    ? "bg-primary/10 text-primary border-primary"
+                    : "border-transparent text-muted-foreground hover:bg-secondary hover:text-foreground"
                 )}>
                   <item.icon size={18} />
                   <span className="font-bold uppercase text-xs tracking-wider">{item.label}</span>
                 </div>
               </Link>
-            )
+            );
           })}
         </nav>
         <div className="p-4 border-t border-border hidden md:block">
-          <button 
+          <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 w-full text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors border border-transparent hover:border-destructive"
           >

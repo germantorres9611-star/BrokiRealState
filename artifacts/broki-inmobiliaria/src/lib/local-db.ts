@@ -1,4 +1,4 @@
-// LocalStorage Database Wrapper simulating an API
+// LocalStorage Database Wrapper
 
 export type Property = {
   id: string;
@@ -9,11 +9,11 @@ export type Property = {
   bedrooms: number;
   bathrooms: number;
   description: string;
-  images: string[]; // array of base64 strings or URLs
+  images: string[];
   category: 'economico' | 'medio' | 'premium';
   available: boolean;
   createdAt: string;
-}
+};
 
 export type SiteContent = {
   heroTitle: string;
@@ -23,22 +23,39 @@ export type SiteContent = {
   contactPhone: string;
   contactEmail: string;
   contactWhatsapp: string;
-}
+};
+
+export type WhatsAppConfig = {
+  number: string;
+  message: string;
+  buttonText: string;
+};
+
+export type HeroBg = {
+  data: string | null; // base64 or null (use default)
+};
 
 export type UploadedFile = {
   id: string;
   name: string;
-  data: string; // base64
+  data: string;
   type: 'image' | 'audio';
   createdAt: string;
-}
+};
 
 export type PricingCategory = {
   id: string;
   name: string;
   priceRange: string;
   features: string[];
-}
+};
+
+export type ActivityLog = {
+  id: string;
+  action: string;
+  details: string;
+  timestamp: string;
+};
 
 const SEED_PROPERTIES: Property[] = [
   {
@@ -95,6 +112,12 @@ const SEED_CONTENT: SiteContent = {
   contactWhatsapp: "573041363265"
 };
 
+const SEED_WHATSAPP: WhatsAppConfig = {
+  number: "573041363265",
+  message: "Hola, estoy interesado en conocer más sobre sus apartamentos disponibles.",
+  buttonText: "Escríbenos"
+};
+
 const SEED_PRICING: PricingCategory[] = [
   { id: "economico", name: "ESTÁNDAR", priceRange: "Desde $350M COP", features: ["Diseño Funcional", "Ubicación Estratégica", "1-2 Habitaciones"] },
   { id: "medio", name: "AVANZADO", priceRange: "Desde $600M COP", features: ["Acabados Premium", "Domótica Básica", "Vistas Panorámicas"] },
@@ -103,33 +126,41 @@ const SEED_PRICING: PricingCategory[] = [
 
 export const initDB = () => {
   if (typeof window === 'undefined') return;
-  
-  if (!localStorage.getItem('broki_properties')) {
+  if (!localStorage.getItem('broki_properties'))
     localStorage.setItem('broki_properties', JSON.stringify(SEED_PROPERTIES));
-  }
-  if (!localStorage.getItem('broki_content')) {
+  if (!localStorage.getItem('broki_content'))
     localStorage.setItem('broki_content', JSON.stringify(SEED_CONTENT));
-  }
-  if (!localStorage.getItem('broki_prices')) {
+  if (!localStorage.getItem('broki_prices'))
     localStorage.setItem('broki_prices', JSON.stringify(SEED_PRICING));
-  }
-  if (!localStorage.getItem('broki_images')) {
+  if (!localStorage.getItem('broki_images'))
     localStorage.setItem('broki_images', JSON.stringify([]));
-  }
-  if (!localStorage.getItem('broki_gallery')) {
+  if (!localStorage.getItem('broki_gallery'))
     localStorage.setItem('broki_gallery', JSON.stringify(["/images/demo-apt-1.png", "/images/demo-apt-2.png", "/images/demo-apt-3.png"]));
-  }
+  if (!localStorage.getItem('broki_whatsapp'))
+    localStorage.setItem('broki_whatsapp', JSON.stringify(SEED_WHATSAPP));
+  if (!localStorage.getItem('broki_activity'))
+    localStorage.setItem('broki_activity', JSON.stringify([]));
 };
 
 export const getDB = <T>(key: string, fallback: T): T => {
   try {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : fallback;
-  } catch {
-    return fallback;
-  }
+  } catch { return fallback; }
 };
 
 export const setDB = <T>(key: string, data: T): void => {
   localStorage.setItem(key, JSON.stringify(data));
+};
+
+export const addActivityLog = (action: string, details: string): void => {
+  const logs = getDB<ActivityLog[]>('broki_activity', []);
+  const entry: ActivityLog = {
+    id: Math.random().toString(36).substring(2, 9),
+    action,
+    details,
+    timestamp: new Date().toISOString(),
+  };
+  // Keep only last 100 entries
+  setDB('broki_activity', [entry, ...logs].slice(0, 100));
 };

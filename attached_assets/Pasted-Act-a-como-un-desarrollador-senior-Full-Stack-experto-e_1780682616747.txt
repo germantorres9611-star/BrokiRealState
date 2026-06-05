@@ -1,0 +1,199 @@
+Actúa como un desarrollador senior Full Stack, experto en seguridad web, UX/UI moderno, GitHub, Replit y despliegues en Hostinger.
+
+Voy a migrar este proyecto desde Replit hacia GitHub y posteriormente a Hostinger. Antes de la migración necesito una auditoría completa del proyecto y una refactorización enfocada en seguridad, administración y diseño visual.
+
+OBJETIVOS PRINCIPALES
+1. Auditoría de Seguridad
+
+Analiza todo el proyecto y corrige vulnerabilidades potenciales:
+
+Sanitización de formularios.
+Protección contra XSS.
+Protección contra CSRF.
+Validación de entradas tanto en frontend como backend.
+Protección de rutas administrativas.
+Protección contra fuerza bruta en login.
+Manejo seguro de sesiones.
+Eliminación de credenciales hardcodeadas.
+Variables sensibles almacenadas mediante variables de entorno.
+Headers de seguridad.
+Rate limiting.
+Validación de subida de archivos.
+Prevención de inyección SQL si existe base de datos.
+Generar un reporte de las mejoras realizadas.
+
+Preparar el proyecto para producción en Hostinger.
+
+2. Panel Administrativo Mejorado
+
+Crear un panel administrativo moderno y responsive.
+
+Agregar una sección:
+
+Configuración General
+
+Permitir modificar desde el panel:
+
+WhatsApp
+
+Campo editable:
+
+Número de WhatsApp.
+Mensaje predeterminado.
+Texto del botón.
+
+Los cambios deben reflejarse automáticamente en toda la página sin modificar código.
+
+Fondo Principal
+
+Agregar módulo para:
+
+Subir imagen.
+Reemplazar imagen.
+Eliminar imagen.
+Vista previa.
+Compresión automática.
+
+El fondo debe actualizarse automáticamente en el Home.
+
+Seguridad Administrativa
+
+Agregar sección:
+
+Seguridad
+
+Permitir:
+
+Cambiar contraseña del administrador.
+Confirmar contraseña actual.
+Confirmar nueva contraseña.
+Guardar contraseña de forma segura usando hash bcrypt.
+Mostrar indicador de fortaleza de contraseña.
+Registrar fecha del último cambio.
+
+Nunca almacenar contraseñas en texto plano.
+
+Gestión de Medios
+
+Crear módulo para:
+
+Imágenes principales.
+Logos.
+Banners.
+Galería.
+
+Con vista previa instantánea.
+
+Registro de Actividad
+
+Agregar logs para:
+
+Inicio de sesión.
+Cambio de contraseña.
+Cambio de WhatsApp.
+Cambio de imágenes.
+Cambios de configuración.
+
+Mostrar fecha y hora.
+
+3. Rediseño Visual Premium
+
+Mantener la identidad actual del proyecto pero llevarla a un nivel más profesional.
+
+Aplicar:
+
+Liquid Glass
+
+Inspirado en:
+
+Apple VisionOS.
+iOS moderno.
+Interfaces premium.
+
+Elementos:
+
+Transparencias.
+Blur dinámico.
+Reflejos sutiles.
+Bordes translúcidos.
+Depth layers.
+Animaciones
+
+Agregar animaciones suaves:
+
+Fade In.
+Slide Up.
+Scroll Reveal.
+Hover Effects.
+Floating Elements.
+Smooth Transitions.
+
+Todas optimizadas para rendimiento.
+
+Microinteracciones
+
+Implementar:
+
+Botones con animación.
+Tarjetas interactivas.
+Efectos al pasar el mouse.
+Feedback visual inmediato.
+Hero Section
+
+Rediseñar completamente el Home:
+
+Más moderno.
+Más elegante.
+Más premium.
+Más enfocado en conversión.
+
+Incluir:
+
+CTA principal.
+CTA WhatsApp.
+Estadísticas animadas.
+Fondo dinámico.
+Responsive
+
+Optimizar:
+
+Desktop.
+Tablet.
+Mobile.
+
+Garantizar excelente experiencia en dispositivos móviles.
+
+Rendimiento
+
+Optimizar:
+
+Lazy Loading.
+Compresión de imágenes.
+Minificación.
+Optimización SEO.
+Lighthouse superior a 90.
+Migración
+
+Preparar el proyecto para:
+
+Repositorio GitHub limpio.
+
+Estructura profesional:
+
+/public
+/src
+/components
+/assets
+/admin
+/api
+/config
+/utils
+
+Documentar claramente:
+
+Variables de entorno necesarias.
+Proceso de despliegue en Hostinger.
+Dependencias utilizadas.
+Pasos para futuras actualizaciones.
+
+Antes de aplicar cambios, analizar la estructura actual del proyecto y proponer las mejoras específicas más convenientes para este caso.
