@@ -1,7 +1,6 @@
 // Hostinger production build config
 // Usage: pnpm --filter @workspace/broki-inmobiliaria run build:hostinger
-// Output: artifacts/broki-inmobiliaria/dist-hostinger/
-// Upload contents of dist-hostinger/ to public_html/ on Hostinger
+// Output: <repo-root>/public_html/  (Hostinger serves this folder via GitHub Auto Deploy)
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
@@ -20,7 +19,7 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist-hostinger"),
+    outDir: path.resolve(import.meta.dirname, "../../public_html"),
     emptyOutDir: true,
     rollupOptions: {
       output: {

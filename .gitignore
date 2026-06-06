@@ -47,3 +47,10 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Hostinger build output (legacy location)
+dist-hostinger/
+artifacts/broki-inmobiliaria/dist-hostinger/
+
+# Hostinger local credentials — create this file manually on Hostinger, never commit it
+public_html/api/config.local.php

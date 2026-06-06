@@ -1,0 +1,14 @@
+<?php
+// ═══════════════════════════════════════════════════
+//  config.local.php — Credenciales reales de Hostinger
+//
+//  INSTRUCCIONES:
+//  1. Copia este archivo como: api/config.local.php
+//  2. Reemplaza los valores con tus credenciales reales de hPanel
+//  3. Guarda. Este archivo NO está en git.
+// ═══════════════════════════════════════════════════
+
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'u123456789_broki');     // ← hPanel → Bases de datos → Nombre
+define('DB_USER', 'u123456789_broki');     // ← hPanel → Bases de datos → Usuario
+define('DB_PASS', 'tu_contraseña_aqui');   // ← la contraseña que definiste al crear la DB
