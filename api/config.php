@@ -4,18 +4,18 @@ declare(strict_types=1);
 // ═══════════════════════════════════════════════════
 //  BROKI INMOBILIARIA — PHP API Config
 //
-//  SETUP EN HOSTINGER (una sola vez):
-//  1. En el Administrador de Archivos, copia api/config.local.php.example
-//     → api/config.local.php
-//  2. Edita config.local.php con tu usuario/contraseña/nombre de base de datos
-//  3. config.local.php NO está en git → nunca será sobreescrito por auto-deploy
+//  SETUP EN HOSTINGER (solo una vez):
+//  1. En hPanel → Administrador de Archivos → api/
+//  2. Copia api/config.local.php.example → api/config.local.php
+//  3. Edita config.local.php con tus credenciales reales de la DB
+//  4. Guarda. Este archivo NO está en git → nunca se sobreescribirá.
 // ═══════════════════════════════════════════════════
 
-// Carga credenciales locales (no están en git, no se sobreescriben con cada deploy)
+// Carga credenciales locales (no en git, no sobreescritas por auto-deploy)
 if (file_exists(__DIR__ . '/config.local.php')) {
     require_once __DIR__ . '/config.local.php';
 } else {
-    // Valores placeholder — reemplazar en config.local.php en Hostinger
+    // Placeholders — reemplazar en config.local.php en Hostinger
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'u123456789_broki');     // ← tu nombre de base de datos
     define('DB_USER', 'u123456789_broki');     // ← tu usuario de base de datos

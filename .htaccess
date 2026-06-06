@@ -1,0 +1,77 @@
+Options -Indexes
+ServerSignature Off
+
+# ── Block access to source code directories ──────────────
+# These exist in the repo but must never be web-accessible
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Block source code and build tooling dirs
+    RewriteRule ^(artifacts|lib|scripts|hostinger-deploy|attached_assets|node_modules)(/|$) - [F,L]
+
+    # Block dot-hidden dirs (except .well-known for SSL)
+    RewriteRule ^\.(?!well-known) - [F,L]
+</IfModule>
+
+# ── Block sensitive root files ────────────────────────────
+<FilesMatch "^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|tsconfig.*\.json|\.npmrc|\.replitignore|replit\.md|database\.sql|DEPLOY\.md)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Block direct access to API config files ───────────────
+<FilesMatch "^config(\.local)?\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Gzip compression ──────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml font/woff2
+</IfModule>
+
+# ── Browser caching ───────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css               "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/jpeg             "access plus 6 months"
+    ExpiresByType image/png              "access plus 6 months"
+    ExpiresByType image/webp             "access plus 6 months"
+    ExpiresByType audio/mpeg             "access plus 6 months"
+    ExpiresByType font/woff2             "access plus 1 year"
+</IfModule>
+
+# ── Security headers ──────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── React SPA routing ─────────────────────────────────────
+# Serve real files/dirs as-is; everything else → index.html
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Block source dirs (handled above, repeated here for mod_rewrite pass)
+    RewriteRule ^(artifacts|lib|scripts|hostinger-deploy|attached_assets|node_modules)(/|$) - [F,L]
+
+    # Don't rewrite actual files or directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Don't rewrite API calls
+    RewriteRule ^api/ - [L]
+
+    # Don't rewrite uploads
+    RewriteRule ^uploads/ - [L]
+
+    # Everything else → SPA entry point
+    RewriteRule ^ index.html [L]
+</IfModule>

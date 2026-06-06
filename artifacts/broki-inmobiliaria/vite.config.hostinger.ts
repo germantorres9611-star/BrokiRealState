@@ -1,6 +1,9 @@
 // Hostinger production build config
 // Usage: pnpm --filter @workspace/broki-inmobiliaria run build:hostinger
-// Output: <repo-root>/public_html/  (Hostinger serves this folder via GitHub Auto Deploy)
+//
+// Output goes to the REPO ROOT (../../ from this file).
+// Hostinger GitHub Auto Deploy maps the entire repo root → public_html on the server.
+// Do NOT add a public_html/ subfolder — that creates public_html/public_html/ on Hostinger.
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
@@ -19,8 +22,9 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: path.resolve(import.meta.dirname, "../../public_html"),
-    emptyOutDir: true,
+    // Outputs directly to repo root; Vite never empties dirs outside its own root, so source files are safe.
+    outDir: path.resolve(import.meta.dirname, "../.."),
+    emptyOutDir: false,
     rollupOptions: {
       output: {
         manualChunks: {
